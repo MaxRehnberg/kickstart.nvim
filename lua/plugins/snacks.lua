@@ -8,12 +8,19 @@ return {
             -- Enable the features you want
             bigfile = { enabled = true },
             input = { enabled = true },
+            lazygit = { enabled = true },
             notifier = { enabled = true },
-            picker = { enabled = true },
+            picker = {
+                enabled = true,
+                previewers = {
+                    diff = { style = "terminal" },
+                },
+            },
             quickfile = { enabled = true },
             statuscolumn = { enabled = false }, -- Disable to preserve your own number settings
             terminal = { enabled = true },
             words = { enabled = true },
+            zoom = { enabled = true },
         },
         keys = {
             -- Top Pickers
@@ -38,6 +45,7 @@ return {
             { '<leader>gb',       function() Snacks.picker.git_branches() end,                            desc = 'Git Branches' },
             { '<leader>gl',       function() Snacks.picker.git_log() end,                                 desc = 'Git Log' },
             { '<leader>gs',       function() Snacks.picker.git_status() end,                              desc = 'Git Status' },
+            { '<leader>lg',       function() Snacks.lazygit() end,                                        desc = 'LazyGit' },
 
             -- Other useful pickers
             { '<leader>sc',       function() Snacks.picker.commands() end,                                desc = '[S]earch [C]ommands' },
@@ -57,6 +65,9 @@ return {
             -- Words navigation
             { ']]',               function() Snacks.words.jump(vim.v.count1) end,                         desc = 'Next Reference',                        mode = { 'n', 't' } },
             { '[[',               function() Snacks.words.jump(-vim.v.count1) end,                        desc = 'Prev Reference',                        mode = { 'n', 't' } },
+
+            -- Zoom
+            { '<leader>z',        function() Snacks.zoom() end,                                           desc = 'Toggle Zoom' },
         },
         init = function()
             vim.api.nvim_create_autocmd('User', {
