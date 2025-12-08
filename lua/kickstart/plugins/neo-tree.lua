@@ -14,11 +14,25 @@ return {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
+    window = {
+      position = 'left',
+      width = 30,
+    },
     filesystem = {
       window = {
         mappings = {
           ['\\'] = 'close_window',
         },
+      },
+    },
+    event_handlers = {
+      {
+        event = 'neo_tree_window_after_open',
+        handler = function(args)
+          if args.position == 'left' or args.position == 'right' then
+            vim.cmd 'setlocal number relativenumber'
+          end
+        end,
       },
     },
   },
