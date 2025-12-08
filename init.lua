@@ -107,6 +107,12 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- Create a PR using mkpr command in a floating terminal (runs from current file's git root)
+vim.keymap.set('n', '<leader>pr', function()
+  local git_root = vim.fn.systemlist('git -C ' .. vim.fn.expand('%:p:h') .. ' rev-parse --show-toplevel')[1]
+  Snacks.terminal.open('zsh -ic mkpr', { interactive = false, cwd = git_root })
+end, { desc = 'Create [P][R] with mkpr' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.

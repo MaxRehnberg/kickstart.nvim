@@ -49,7 +49,7 @@ return {
 
                     -- Rename the variable under your cursor.
                     --  Most Language Servers support renaming across files, etc.
-                    map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+                    map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
                     -- Execute a code action, usually your cursor needs to be on top of an error
                     -- or a suggestion from your LSP for this to activate.
@@ -202,6 +202,23 @@ return {
 
                 -- ty (Astral) for Python type checking and completions
                 ty = {},
+
+                -- Pyright only for rename (disable other features)
+                pyright = {
+                    settings = {
+                        pyright = {
+                            -- Disable import organization, let Ruff handle it
+                            disableOrganizeImports = true,
+                        },
+                        python = {
+                            analysis = {
+                                -- Disable diagnostics, let ty handle type checking
+                                diagnosticMode = 'off',
+                                typeCheckingMode = 'off',
+                            },
+                        },
+                    },
+                },
 
                 lua_ls = {
                     -- cmd = { ... },

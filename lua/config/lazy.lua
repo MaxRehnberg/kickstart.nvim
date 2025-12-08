@@ -26,7 +26,7 @@ require('lazy').setup {
     -- { import = 'kickstart.plugins.indent_line' },
     -- { import = 'kickstart.plugins.lint' },
     -- { import = 'kickstart.plugins.autopairs' },
-    { import = 'kickstart.plugins.neo-tree' },
+    -- { import = 'kickstart.plugins.neo-tree' }, -- Already loaded from plugins/neo-tree.lua
     -- { import = 'kickstart.plugins.gitsigns' }, -- adds gitsigns recommend keymaps
   },
 

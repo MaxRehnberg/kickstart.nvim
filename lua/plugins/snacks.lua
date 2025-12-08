@@ -12,6 +12,7 @@ return {
             picker = { enabled = true },
             quickfile = { enabled = true },
             statuscolumn = { enabled = false }, -- Disable to preserve your own number settings
+            terminal = { enabled = true },
             words = { enabled = true },
         },
         keys = {
