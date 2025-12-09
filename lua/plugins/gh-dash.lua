@@ -4,7 +4,12 @@ return {
     keys = {
         {
             '<leader>ghd',
-            function() require('gh_dash').toggle() end,
+            function()
+                require('gh_dash').toggle()
+                vim.schedule(function()
+                    vim.cmd('startinsert')
+                end)
+            end,
             desc = 'Toggle [G][H]-[D]ash popup',
         },
     },

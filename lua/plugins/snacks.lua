@@ -7,6 +7,8 @@ return {
         opts = {
             -- Enable the features you want
             bigfile = { enabled = true },
+            dashboard = { enabled = true },
+            indent = { enabled = true },
             input = { enabled = true },
             lazygit = { enabled = true },
             notifier = { enabled = true },
@@ -20,7 +22,7 @@ return {
             statuscolumn = { enabled = false }, -- Disable to preserve your own number settings
             terminal = { enabled = true },
             words = { enabled = true },
-            zoom = { enabled = true },
+            zen = { enabled = true },
         },
         keys = {
             -- Top Pickers
@@ -30,6 +32,7 @@ return {
 
             -- Find
             { '<leader>sf',       function() Snacks.picker.files() end,                                   desc = '[S]earch [F]iles' },
+            { '<leader>sF',       function() Snacks.picker.files({ cwd = '~' }) end,                      desc = '[S]earch [F]iles (home)' },
             { '<leader>sg',       function() Snacks.picker.grep() end,                                    desc = '[S]earch by [G]rep' },
             { '<leader>sw',       function() Snacks.picker.grep_word() end,                               desc = '[S]earch current [W]ord',               mode = { 'n', 'x' } },
             { '<leader>sh',       function() Snacks.picker.help() end,                                    desc = '[S]earch [H]elp' },
@@ -42,32 +45,45 @@ return {
             { '<leader>s/',       function() Snacks.picker.grep_buffers() end,                            desc = '[S]earch [/] in Open Files' },
 
             -- Git
-            { '<leader>gb',       function() Snacks.picker.git_branches() end,                            desc = 'Git Branches' },
-            { '<leader>gl',       function() Snacks.picker.git_log() end,                                 desc = 'Git Log' },
-            { '<leader>gs',       function() Snacks.picker.git_status() end,                              desc = 'Git Status' },
-            { '<leader>lg',       function() Snacks.lazygit() end,                                        desc = 'LazyGit' },
+            { '<leader>gb',       function() Snacks.picker.git_branches() end,                            desc = '[G]it [B]ranches' },
+            { '<leader>gl',       function() Snacks.lazygit() end,                                        desc = '[G]it [L]azyGit' },
+            { '<leader>glo',      function() Snacks.picker.git_log() end,                                 desc = '[G]it [L]og' },
+            {
+                '<leader>gpr',
+                function()
+                    local git_root = vim.fn.systemlist('git -C ' ..
+                        vim.fn.expand('%:p:h') .. ' rev-parse --show-toplevel')[1]
+                    Snacks.terminal.open('zsh -ic mkpr', { interactive = false, cwd = git_root })
+                end,
+                desc = '[G]it [P][R]'
+            },
+            { '<leader>gs',  function() Snacks.picker.git_status() end,                                       desc = '[G]it [S]tatus' },
 
             -- Other useful pickers
-            { '<leader>sc',       function() Snacks.picker.commands() end,                                desc = '[S]earch [C]ommands' },
-            { '<leader>sm',       function() Snacks.picker.marks() end,                                   desc = '[S]earch [M]arks' },
-            { '<leader>sq',       function() Snacks.picker.qflist() end,                                  desc = '[S]earch [Q]uickfix List' },
+            { '<leader>sc',  function() Snacks.picker.commands() end,                                         desc = '[S]earch [C]ommands' },
+            { '<leader>sm',  function() Snacks.picker.marks() end,                                            desc = '[S]earch [M]arks' },
+            { '<leader>sq',  function() Snacks.picker.qflist() end,                                           desc = '[S]earch [Q]uickfix List' },
 
             -- LSP (also mapped in lsp.lua for when LSP attaches)
-            { 'gd',               function() Snacks.picker.lsp_definitions() end,                         desc = 'Goto Definition' },
-            { 'gr',               function() Snacks.picker.lsp_references() end,                          nowait = true,                                  desc = 'References' },
-            { 'gI',               function() Snacks.picker.lsp_implementations() end,                     desc = 'Goto Implementation' },
-            { 'gy',               function() Snacks.picker.lsp_type_definitions() end,                    desc = 'Goto T[y]pe Definition' },
+            { 'gd',          function() Snacks.picker.lsp_definitions() end,                                  desc = '[G]oto [D]efinition' },
+            { 'gr',          function() Snacks.picker.lsp_references() end,                                   nowait = true,                      desc = '[G]oto [R]eferences' },
+            { 'gI',          function() Snacks.picker.lsp_implementations() end,                              desc = '[G]oto [I]mplementation' },
+            { 'gty',         function() Snacks.picker.lsp_type_definitions() end,                             desc = '[G]oto [T]ype [D]efinition' },
 
             -- Notifications
-            { '<leader>un',       function() Snacks.notifier.hide() end,                                  desc = 'Dismiss All Notifications' },
-            { '<leader>sN',       function() Snacks.picker.notifications() end,                           desc = '[S]earch [N]otifications' },
+            { '<leader>un',  function() Snacks.notifier.hide() end,                                           desc = 'Dismiss All Notifications' },
+            { '<leader>sN',  function() Snacks.picker.notifications() end,                                    desc = '[S]earch [N]otifications' },
 
             -- Words navigation
-            { ']]',               function() Snacks.words.jump(vim.v.count1) end,                         desc = 'Next Reference',                        mode = { 'n', 't' } },
-            { '[[',               function() Snacks.words.jump(-vim.v.count1) end,                        desc = 'Prev Reference',                        mode = { 'n', 't' } },
+            { ']]',          function() Snacks.words.jump(vim.v.count1) end,                                  desc = 'Next Reference',            mode = { 'n', 't' } },
+            { '[[',          function() Snacks.words.jump(-vim.v.count1) end,                                 desc = 'Prev Reference',            mode = { 'n', 't' } },
 
-            -- Zoom
-            { '<leader>z',        function() Snacks.zoom() end,                                           desc = 'Toggle Zoom' },
+            -- Zen / Zoom
+            { '<leader>Z',   function() Snacks.zen() end,                                                     desc = 'Toggle Zen Mode' },
+            { '<leader>z',   function() Snacks.zen.zoom() end,                                                desc = 'Toggle Zoom' },
+
+            -- LazySQL
+            { '<leader>sql', function() Snacks.terminal.toggle('lazysql', { win = { style = "float" } }) end, desc = 'Lazy[S][Q][L]' },
         },
         init = function()
             vim.api.nvim_create_autocmd('User', {

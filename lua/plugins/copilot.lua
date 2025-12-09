@@ -8,12 +8,12 @@ return {
             enabled = true,
             auto_trigger = true,
             keymap = {
-                accept = '<M-l>', -- Alt+l to accept
+                accept = '<M-Tab>', -- Option+Tab to accept
                 accept_word = '<M-w>',
                 accept_line = '<M-j>',
                 next = '<M-]>',
                 prev = '<M-[>',
-                dismiss = '<C-]>',
+                dismiss = '<M-Esc>', -- Option+Escape to dismiss
             },
         },
         panel = {

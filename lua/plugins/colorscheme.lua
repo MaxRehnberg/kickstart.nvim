@@ -71,6 +71,11 @@ return {
             vim.api.nvim_set_hl(0, '@boolean', { fg = '#7C7387' })
             vim.api.nvim_set_hl(0, 'Constant', { fg = '#7C7387' })
             vim.api.nvim_set_hl(0, '@constant.builtin', { fg = '#7C7387' }) -- None, True, False
+
+            -- Search highlights
+            vim.api.nvim_set_hl(0, 'Search', { fg = '#222222', bg = '#5f9ea0' })    -- all matches (teal)
+            vim.api.nvim_set_hl(0, 'IncSearch', { fg = '#222222', bg = '#b36d43' }) -- current/focused match (orange)
+            vim.api.nvim_set_hl(0, 'CurSearch', { fg = '#222222', bg = '#b36d43' }) -- current match (orange)
         end,
     },
 

@@ -46,10 +46,16 @@ return {
 
             -- Document existing key chains
             spec = {
-                { '<leader>a', group = '[A]I' },
-                { '<leader>s', group = '[S]earch' },
-                { '<leader>t', group = '[T]oggle' },
-                { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+                { '<leader>a',  group = '[A]I' },
+                { '<leader>b',  group = '[B]uffer' },
+                { '<leader>bs', group = '[B]uffer [S]plit' },
+                { '<leader>g',  group = '[G]it' },
+                { '<leader>h',  group = 'Git [H]unk',              mode = { 'n', 'v' } },
+                { '<leader>q',  group = '[Q]uickfix / Persistence' },
+                { '<leader>s',  group = '[S]earch' },
+                { '<leader>t',  group = '[T]oggle' },
+                { '<leader>u',  group = '[U]I' },
+                { 'g',          group = '[G]oto' },
             },
         },
     },
